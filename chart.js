@@ -73,7 +73,31 @@ function createGraphInterface () {
     });
 }
 
+function createInputAttributeName () {
+    let elementHolder = document.getElementsByTagName("input")
+    for (var i = 0; i < physical_attribute_length; i++) {
+        elementHolder[i].setAttribute("name", physical_attribute_name[i])
+    }
+}
 
 
+
+function ResultPrinter(form) {        
+    for (var i = 0; i < physical_attribute_length; i++) {
+        // console.log(form.physical_attribute_name[i].value)
+
+        console.log(form.strength .value)
+        console.log(form.explosive.value)
+        console.log(form.stamina .value)
+        console.log(form.edurance .value)
+        console.log(form.speed.value)
+        console.log(form.agility.value)
+        console.log(form.mobility.value)
+        
+    }
+}
+
+
+createInputAttributeName();
 createInputLables();
 createGraphInterface();
