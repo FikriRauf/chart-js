@@ -84,16 +84,7 @@ function createInputAttributeName () {
 
 function ResultPrinter(form) {        
     for (var i = 0; i < physical_attribute_length; i++) {
-        // console.log(form.physical_attribute_name[i].value)
-
-        console.log(form.strength .value)
-        console.log(form.explosive.value)
-        console.log(form.stamina .value)
-        console.log(form.edurance .value)
-        console.log(form.speed.value)
-        console.log(form.agility.value)
-        console.log(form.mobility.value)
-        
+        console.log(form[i].value)        
     }
 }
 
