@@ -6,20 +6,14 @@ const physical_attribute_name = [
     "speed",
     "agility",
     "mobility",
+    "stability",
+    "power",
+    "flexibility",
+    "intellect"
 ];
 
 const physical_attribute_length = physical_attribute_name.length;
 var ctx = document.getElementById('myChart').getContext('2d');
-
-
-    
-function createInputLables () {
-    var physical_attribute_element = document.getElementsByTagName('label');
-    
-    for (var i = 0; i < physical_attribute_name.length; i++) {
-        physical_attribute_element[i].innerText = physical_attribute_name[i]
-    }
-}
 
 function createGraphDatasets () {
     const MyFirstDataset = {
@@ -73,14 +67,6 @@ function createGraphInterface () {
     });
 }
 
-function createInputAttributeName () {
-    let elementHolder = document.getElementsByTagName("input")
-    for (var i = 0; i < physical_attribute_length; i++) {
-        elementHolder[i].setAttribute("name", physical_attribute_name[i])
-    }
-}
-
-
 
 function ResultPrinter(form) {        
     for (var i = 0; i < physical_attribute_length; i++) {
@@ -88,7 +74,56 @@ function ResultPrinter(form) {
     }
 }
 
+function createNewNodes () {
+    let newLabelNode = document.createElement("label");
+    let newInputNode = document.createElement("input");
 
-createInputAttributeName();
+    newInputNode.setAttribute("type", "number");
+    newInputNode.setAttribute("min", "0");
+    newInputNode.setAttribute("max", "100");
+    newInputNode.setAttribute("placeholder", "0");
+
+    return {
+        new_label_node: newLabelNode,
+        new_input_node: newInputNode
+    };
+}
+
+function getParentNodeAndSubmitNodeAndFormLength () {
+    let form_length = physical_attribute_form.length;
+    let last_element_index = form_length - 1;
+    
+    let parentNode = physical_attribute_form[last_element_index].parentNode;
+    let referSubmitNode = physical_attribute_form[last_element_index];
+
+    return {
+        parent_node: parentNode,
+        refer_submit_node: referSubmitNode,
+        form_length: form_length
+    };
+}
+
+function insertLabelAndInputNode () {
+    let {parent_node, refer_submit_node, form_length} = getParentNodeAndSubmitNodeAndFormLength();
+    
+    for (form_length; form_length <= physical_attribute_length; form_length++) {
+        const {new_label_node, new_input_node} = createNewNodes();
+        
+        parent_node.insertBefore(new_label_node, refer_submit_node)
+        parent_node.insertBefore(new_input_node, refer_submit_node)
+    }
+}
+
+function createInputLables () {
+    var physical_attribute_element = document.getElementsByTagName("label");
+    console.log(physical_attribute_element)
+    
+    for (var i = 0; i < physical_attribute_name.length; i++) {
+        physical_attribute_element[i].innerText = physical_attribute_name[i]
+    }
+}
+
+
+insertLabelAndInputNode();
 createInputLables();
 createGraphInterface();
