@@ -84,8 +84,8 @@ function createNewNodes () {
     newInputNode.setAttribute("placeholder", "0");
 
     return {
-        new_label_node: newLabelNode,
-        new_input_node: newInputNode
+        newLabelNode,
+        newInputNode
     };
 }
 
@@ -97,20 +97,20 @@ function getParentNodeAndSubmitNodeAndFormLength () {
     let referSubmitNode = physical_attribute_form[last_element_index];
 
     return {
-        parent_node: parentNode,
-        refer_submit_node: referSubmitNode,
-        form_length: form_length
+        parentNode,
+        referSubmitNode,
+        form_length
     };
 }
 
 function insertLabelAndInputNode () {
-    let {parent_node, refer_submit_node, form_length} = getParentNodeAndSubmitNodeAndFormLength();
+    let {parentNode, referSubmitNode, form_length} = getParentNodeAndSubmitNodeAndFormLength();
     
     for (form_length; form_length <= physical_attribute_length; form_length++) {
-        const {new_label_node, new_input_node} = createNewNodes();
+        const {newLabelNode, newInputNode} = createNewNodes();
         
-        parent_node.insertBefore(new_label_node, refer_submit_node)
-        parent_node.insertBefore(new_input_node, refer_submit_node)
+        parentNode.insertBefore(newLabelNode, referSubmitNode)
+        parentNode.insertBefore(newInputNode, referSubmitNode)
     }
 }
 
