@@ -9,72 +9,39 @@ const physical_attribute_name = [
     "stability",
     "power",
     "flexibility",
-    "intellect"
+
 ];
+
+
 
 const physical_attribute_length = physical_attribute_name.length;
 var ctx = document.getElementById('myChart').getContext('2d');
 
-function createGraphDatasets () {
-    const MyFirstDataset = {
-            label: 'My First Dataset',
-            data: [65, 59, 90, 81, 56, 55, 40],
-            fill: true,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgb(255, 99, 132)',
-            pointBackgroundColor: 'rgb(255, 99, 132)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(255, 99, 132)'
-    };
-    
-    const MyFourthDataset = {
-        data: [1, 1, 1, 1, 1, 1, 1] 
-        
-    };
-
-    return {
-        first_dataset: MyFirstDataset,
-        second_dataset: MyFourthDataset
-    };
-}
-
-function createGraphSetting () {
-    const {first_dataset, second_dataset} = createGraphDatasets();
-    
-    const data = {
-        labels: physical_attribute_name,
-        datasets: [
-            first_dataset,
-            second_dataset
-        ]
-    };
-
-    return data;
-}
-
-function createGraphInterface () {    
-    var myChart = new Chart(ctx, {
-        type: 'radar',
-        data: createGraphSetting(),
-        options: {
-            elements: {
-              line: {
-                borderWidth: 3
-              }
-            }
-        },
-    });
-}
 
 
-function ResultPrinter(form) {        
+function getPhysicalAttributeValues(form) {        
+    let physical_attribute_value_holder = []
+
     for (var i = 0; i < physical_attribute_length; i++) {
-        console.log(form[i].value)        
+        physical_attribute_value_holder[i] = form[i].value
     }
+    console.log(physical_attribute_value_holder)
+    
+    return physical_attribute_length;
 }
 
-function createNewNodes () {
+function setInputValue () {
+    let holder = document.getElementsByTagName("input")
+    console.log(holder.length)
+    
+    for(var i = 0; i <= physical_attribute_length; i++ ) {
+        console.log(holder[i])
+        holder[i].setAttribute("value", physical_attribute_value_holder[i])
+    }
+    
+}
+
+function createNewLabelAndInputNodes () {
     let newLabelNode = document.createElement("label");
     let newInputNode = document.createElement("input");
 
@@ -89,7 +56,7 @@ function createNewNodes () {
     };
 }
 
-function getParentNodeAndSubmitNodeAndFormLength () {
+function getParentAndSubmitNodesAndFormLength () {
     let form_length = physical_attribute_form.length;
     let last_element_index = form_length - 1;
     
@@ -103,20 +70,19 @@ function getParentNodeAndSubmitNodeAndFormLength () {
     };
 }
 
-function insertLabelAndInputNode () {
-    let {parentNode, referSubmitNode, form_length} = getParentNodeAndSubmitNodeAndFormLength();
+function insertNewLabelAndInputNode () {
+    let {parentNode, referSubmitNode, form_length} = getParentAndSubmitNodesAndFormLength();
     
     for (form_length; form_length <= physical_attribute_length; form_length++) {
-        const {newLabelNode, newInputNode} = createNewNodes();
+        const {newLabelNode, newInputNode} = createNewLabelAndInputNodes();
         
         parentNode.insertBefore(newLabelNode, referSubmitNode)
         parentNode.insertBefore(newInputNode, referSubmitNode)
     }
 }
 
-function createInputLables () {
+function createInputLabels () {
     var physical_attribute_element = document.getElementsByTagName("label");
-    console.log(physical_attribute_element)
     
     for (var i = 0; i < physical_attribute_name.length; i++) {
         physical_attribute_element[i].innerText = physical_attribute_name[i]
@@ -124,6 +90,79 @@ function createInputLables () {
 }
 
 
-insertLabelAndInputNode();
-createInputLables();
+function createGraphDatasets () {
+    arrayHolder = getPhysicalAttributeValues();
+    const MyFirstDataset = {
+            label: 'My First Dataset',
+            data: arrayHolder,
+            // data: [65, 59, 90, 81, 56, 55, 40],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+    };
+    
+    const MyFourthDataset = {
+        data: [1, 1, 1, 1, 1, 1, 1],
+        fill: false
+    };
+
+    const MyFifthDataset = {
+        data: [100, 100, 100, 100, 100, 100, 100],
+        fill: false,
+        showLine: false
+    }
+
+    return {
+        first_dataset: MyFirstDataset,
+        second_dataset: MyFourthDataset,
+        third_dataset: MyFifthDataset
+    };
+}
+
+function createGraphSetting () {
+    const {first_dataset, second_dataset, third_dataset} = createGraphDatasets();
+    
+    const data = {
+        labels: physical_attribute_name,
+        datasets: [
+            first_dataset,
+            second_dataset,
+            third_dataset
+        ]
+    };
+
+    return data;
+}
+
+function createGraphInterface () {    
+    var myChart = new Chart(ctx, {
+        type: 'radar',
+        data: createGraphSetting(),
+        options: {
+            elements: {
+              line: {
+                borderWidth: 3
+              },
+              point: {
+                  pointRadius: 0
+              }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+            
+        },
+    });
+}
+
+
+// setInputValue();
+insertNewLabelAndInputNode();
+createInputLabels();
 createGraphInterface();
