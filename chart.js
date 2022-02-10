@@ -25,8 +25,6 @@ function getPhysicalAttributeValues(form) {
         physical_attribute_value_holder[i] = form[i].value
         localStorage.setItem('physical_attribute_value_holder', JSON.stringify(physical_attribute_value_holder))
     }
-    console.log(physical_attribute_value_holder);
-    
 }
 
 function setInputValue () {
@@ -91,14 +89,13 @@ function createInputLabels () {
 
 function createGraphDatasets () {
     let arrayHolder;
+    let valueHolder = localStorage.physical_attribute_value_holder;
     
-    console.log(localStorage.physical_attribute_value_holder)
-    let valueHolder = Number(localStorage.physical_attribute_value_holder);
-    console.log(valueHolder)
-
     if (valueHolder != null) {
-        console.log(valueHolder)
-        arrayHolder = valueHolder();
+        
+        let holder = JSON.parse(valueHolder);
+        console.log(holder)
+        arrayHolder = holder;
     } else {
         arrayHolder = [65, 59, 90, 81, 56, 55, 40];
     }
@@ -106,7 +103,6 @@ function createGraphDatasets () {
     const MyFirstDataset = {
             label: 'My First Dataset',
             data: arrayHolder,
-            // data: [65, 59, 90, 81, 56, 55, 40, 37, 85, 32],
             fill: true,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgb(255, 99, 132)',
