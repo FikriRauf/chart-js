@@ -86,23 +86,27 @@ function createInputLabels () {
     }
 }
 
-
-function createGraphDatasets () {
+function assignLocalStorageToVariable() {
     let arrayHolder;
     let valueHolder = localStorage.physical_attribute_value_holder;
     
     if (valueHolder != null) {
-        
         let holder = JSON.parse(valueHolder);
-        console.log(holder)
         arrayHolder = holder;
     } else {
         arrayHolder = [65, 59, 90, 81, 56, 55, 40];
     }
+
+    return arrayHolder;
+}
+
+function createGraphDatasets () {
+
+    let statHolder = assignLocalStorageToVariable();
     
     const MyFirstDataset = {
             label: 'My First Dataset',
-            data: arrayHolder,
+            data: statHolder,
             fill: true,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgb(255, 99, 132)',
